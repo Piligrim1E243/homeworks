@@ -13,53 +13,34 @@ class Student:
         list_of_students.append(self)
 
     def __str__(self):
-        def middle_grade(self):
-            res_1 = []
-            res_2 = []
-            for grade in self.grades.values():
-                result_1 = sum(grade)
-                result_2 = len(grade)
-                res_1.append(result_1)
-                res_2.append(result_2)
-            total = (format(sum(res_1) / sum(res_2), '.1f'))
-            return total
-        
         res = (f" Имя: {self.name}\n Фамилия: {self.surname}\n"
-        f" Средняя оценка за домашние задания: {middle_grade(self)}\n "
+        f" Средняя оценка за домашние задания: {self.middle_grade()}\n "
         f"Курсы в процессе изучения: {', '.join(self.courses_in_progress)}\n"
         f" Завершенные курсы: {', '.join(self.finished_courses)}")    
         return res
 
-    def comparison(self, comp_student):
-        def middle_grade(self):
-            res_1 = []
-            res_2 = []
-            for grade in self.grades.values():
-                result_1 = sum(grade)
-                result_2 = len(grade)
-                res_1.append(result_1)
-                res_2.append(result_2)
-            total = (format(sum(res_1) / sum(res_2), '.1f'))
-            return total
+    def middle_grade(self):
+        res_1 = []
+        res_2 = []
+        for grade in self.grades.values():
+            result_1 = sum(grade)
+            result_2 = len(grade)
+            res_1.append(result_1)
+            res_2.append(result_2)
+            total = format(sum(res_1) / sum(res_2), '.1f')
+        return total
+            
+    def __gt__(self, comp_student):
         if isinstance(comp_student, Student):
-            res_1 = middle_grade(self)
-            res_2 = middle_grade(comp_student)
-            if res_1 > res_2:
-                result = (f"Средняя оценка за домашние задания студента" 
-                f" {self.name} {self.surname} больше чем у студента" 
-                f" {comp_student.name} {comp_student.surname}")
-            elif res_1 < res_2:
-                result = (f"Средняя оценка за домашние задания студента"
-                f" {self.name} {self.surname} меньше чем у студента" 
-                f" {comp_student.name} {comp_student.surname}")
-            elif res_1 == res_2:
-                result = (f"Среднии оценки за домашние задания студента" 
-                f" {self.name} {self.surname} и студента" 
-                f" {comp_student.name} {comp_student.surname} равны")
-            return result 
-        else:
-            result = "Ошибка"
-            return result
+            return self.middle_grade() > comp_student.middle_grade()
+
+    def __lt__(self, comp_student):
+        if isinstance(comp_student, Student):
+            return self.middle_grade() < comp_student.middle_grade()
+
+    def __eq__(self, comp_student):
+        if isinstance(comp_student, Student):
+            return self.middle_grade() == comp_student.middle_grade()
  
     def add_courses(self, course_name):
         self.finished_courses.append(course_name)   
@@ -92,47 +73,32 @@ class Lecturer(Mentor):
         list_of_lecturers.append(self)
 
     def __str__(self):
-        def middle_grade(self):
-            res_1 = []
-            res_2 = []
-            for grade in self.grades.values():
-                result_1 = sum(grade)
-                result_2 = len(grade)
-                res_1.append(result_1)
-                res_2.append(result_2)
-                total = (format(sum(res_1) / sum(res_2), '.1f'))
-                return total
         res = (f" Имя: {self.name}\n Фамилия: {self.surname}\n"
-        f" Средняя оценка за лекции: {middle_grade(self)}")
+        f" Средняя оценка за лекции: {self.middle_grade()}")
         return res
 
-    def comparison(self, comp_lecturer):
-        def middle_grade(self):
-            res_1 = []
-            res_2 = []
-            for grade in self.grades.values():
-                result_1 = sum(grade)
-                result_2 = len(grade)
-                res_1.append(result_1)
-                res_2.append(result_2)
+    def middle_grade(self):
+        res_1 = []
+        res_2 = []
+        for grade in self.grades.values():
+            result_1 = sum(grade)
+            result_2 = len(grade)
+            res_1.append(result_1)
+            res_2.append(result_2)
             total = (format(sum(res_1) / sum(res_2), '.1f'))
-            return total
+        return total
+
+    def __gt__(self, comp_lecturer):
         if isinstance(comp_lecturer, Lecturer):
-            res_1 = middle_grade(self)
-            res_2 = middle_grade(comp_lecturer)
-            if res_1 > res_2:
-                result = (f"Средняя оценка за лекции лектора {self.name} {self.surname}" 
-                f" больше чем у лектора {comp_lecturer.name} {comp_lecturer.surname}")
-            elif res_1 < res_2:
-                result = (f"Средняя оценка за лекции лектора {self.name} {self.surname}" 
-                f" меньше чем у лектора {comp_lecturer.name} {comp_lecturer.surname}")
-            elif res_1 == res_2:
-                result = (f"Среднии оценки за лекции лектора {self.name} {self.surname}"
-                f" и лектора {comp_lecturer.name} {comp_lecturer.surname} равны")
-            return result 
-        else:
-            result = "Ошибка"
-            return result
+            return self.middle_grade() > comp_lecturer.middle_grade()
+
+    def __lt__(self, comp_lecturer):
+        if isinstance(comp_lecturer, Lecturer):
+            return self.middle_grade() < comp_lecturer.middle_grade()
+
+    def __eq__(self, comp_lecturer):
+        if isinstance(comp_lecturer, Lecturer):
+            return self.middle_grade() == comp_lecturer.middle_grade()
 
 
 class Reviewer(Mentor):
@@ -190,15 +156,17 @@ print(lecturer_1)
 lecturer_2 = Lecturer('Ilon', 'Mask')
 lecturer_2.courses_attached += ['Python']
 lecturer_2.courses_attached += ['Git']
-student_1.rate_lecturer(lecturer_2, 'Python', 10 )
-student_2.rate_lecturer(lecturer_2, 'Python', 9 )
-student_1.rate_lecturer(lecturer_2, 'Git', 10 )
-student_2.rate_lecturer(lecturer_2, 'Git', 9 )
-student_1.rate_lecturer(lecturer_2, 'Python', 8 )
-student_2.rate_lecturer(lecturer_2, 'Python', 7 )
+student_1.rate_lecturer(lecturer_2, 'Python', 10)
+student_2.rate_lecturer(lecturer_2, 'Python', 9)
+student_2.rate_lecturer(lecturer_2, 'Git', 10)
+student_1.rate_lecturer(lecturer_2, 'Python', 8)
+student_2.rate_lecturer(lecturer_2, 'Python', 7)
+student_2.rate_lecturer(lecturer_2, 'Git', 9)
 print(lecturer_2)
 
-print(lecturer_1.comparison(lecturer_2))
+print(lecturer_1 > lecturer_2)
+print(lecturer_1 < lecturer_2)
+print(lecturer_1 == lecturer_2)
 
 reviewer_1 = Reviewer('Jimmy', 'Neutron')
 reviewer_1.courses_attached += ['Python']
@@ -220,8 +188,9 @@ print(reviewer_2)
 
 print(student_1)
 print(student_2)
-print(student_1.comparison(student_2))
+print(student_1 > student_2)
+print(student_1 < student_2)
+print(student_1 == student_2)
 
 middle_grades_of_students(list_of_students, 'Python')
-
 middle_grades_of_lecturers(list_of_lecturers, 'Python')
