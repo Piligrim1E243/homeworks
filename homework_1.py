@@ -1,7 +1,7 @@
 from pprint import pprint
 cook_book = {}
 def create_cook_book():
-    with open(r'C:\Users\805520\Desktop\homeworks\cookbook.txt', 'r') as f:
+    with open(r'C:\Users\805520\Desktop\files\homeworks\cookbook.txt', 'r') as f:
         lines = f.read().split('\n\n')
         for line in lines:
             key, num, *value = line.split('\n')
@@ -12,7 +12,7 @@ def create_cook_book():
                 values.append({'ingredient_name': ingredient_name, 'quantity': quantity,
                             'measure': measure})
                 cook_book[key] = values
-        print(cook_book)
+        pprint(cook_book)
 
 
 def get_shop_list_by_dishes(dishes, person_count=1):
@@ -48,4 +48,4 @@ def get_shop_list_by_dishes(dishes, person_count=1):
 
 
 create_cook_book()
-# get_shop_list_by_dishes('Запеченный картофель', 2)
+get_shop_list_by_dishes('Запеченный картофель', 2)
